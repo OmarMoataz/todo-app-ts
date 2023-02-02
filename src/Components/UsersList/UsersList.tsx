@@ -7,15 +7,16 @@ interface User {
 
 interface UsersProps {
   users: Array<User>;
+  onChangeUser: (e: React.ChangeEvent<HTMLSelectElement>) => void,
 }
 
 const UsersList: React.FC<UsersProps> = (props) => {
-  const { users } = props;
+  const { users, onChangeUser } = props;
 
   return (
-    <select>
+    <select defaultValue={users[0]?.id} onChange={onChangeUser}>
       {users.map((user: User) => {
-        return <option key={user.id}> {user.name} </option>;
+        return <option value={user.id} key={user.id}> {user.name} </option>;
       })}
     </select>
   );
