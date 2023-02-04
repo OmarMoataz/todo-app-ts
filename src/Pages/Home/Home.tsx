@@ -4,7 +4,7 @@ import UsersList from "@/Components/UsersList";
 import TodoList from "@/Components/TodoList";
 import SectionGap from "@/Components/SectionGap";
 import { Todo } from "@/Types/generic";
-import { deleteTodo, editTodo } from "@/Api/todos";
+import { createTodo, deleteTodo, editTodo, getTodos } from "@/Api/todos";
 
 const Home: React.FC = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +14,17 @@ const Home: React.FC = () => {
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentUserId(parseInt(e.target.value));
   };
+
+  const handleCreate = async (todoTitle: string) => {
+    try {
+      const newTodo = { title: todoTitle, completed: false, userId: currentUserId };
+      const todoId = await createTodo({ title: todoTitle, completed: false, userId: currentUserId });
+
+      setTodos([{ id: todoId, ...newTodo }, ...todos]);
+    } catch (e) {
+      console.log('failed to create todo');
+    }
+  }
 
   const handleTodoUpdate = async (todo: Todo) => {
     const returnedTodo = await editTodo(todo);
@@ -48,11 +59,9 @@ const Home: React.FC = () => {
   }, []);
 
   const getTodosData = useCallback(async () => {
-    const todosResponse = await axios.get(
-      `${import.meta.env.VITE_TODOS_API}?userId=${currentUserId}`
-    );
+    const todos = await getTodos(currentUserId);
 
-    setTodos(todosResponse.data);
+    setTodos(todos);
   }, [currentUserId]);
 
   useEffect(() => {
@@ -70,6 +79,7 @@ const Home: React.FC = () => {
       <SectionGap gap={10} />
       <UsersList onChangeUser={handleUserChange} users={users} />
       <TodoList
+        onCreate={handleCreate}
         onDelete={handleTodoDelete}
         onUpdate={handleTodoUpdate}
         todos={todos}

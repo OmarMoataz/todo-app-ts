@@ -6,13 +6,15 @@ const todosApi = axios.create({
 });
 
 export const getTodos = async (currentUserId: number) => {
-  const todosResponse = await todosApi.get(`/todos?userId=${currentUserId}`);
+  const todosResponse = await todosApi.get(`/todos?userId=${currentUserId}&_sort=id&_order=desc`);
 
   return todosResponse.data;
 }
 
 export const createTodo = async (todo: Todo) => {
+  const todosResponse = await todosApi.post(`/todos`, todo);
 
+  return todosResponse.data;
 }
 
 export const editTodo = async (todo: Todo) => {
