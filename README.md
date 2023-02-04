@@ -1,3 +1,5 @@
+Live URL for this site can be found @ https://master--todo-app-ts1.netlify.app/
+
 This project is a todo app implemented with typescript and React and styled-components for styling.
 
 This app relies on a json-server API deployed on https://my-json-server.typicode.com/OmarMoataz/todo-app-ts1.
