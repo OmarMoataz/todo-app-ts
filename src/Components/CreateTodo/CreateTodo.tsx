@@ -1,6 +1,4 @@
-import { Todo } from "@/Types/generic";
 import { useState } from "react";
-import SectionGap from "../SectionGap";
 
 import { CreateTodoContainer, TodoLabel } from "./CreateTodo.style";
 import { TodoButton, TodoInput } from "@/Components/Todo/Todo.style";

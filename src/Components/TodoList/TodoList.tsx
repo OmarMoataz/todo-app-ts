@@ -1,7 +1,7 @@
 import Todo from "@/Components/Todo";
 import { Todo as TodoInterface } from "@/Types/generic";
-import CreateTodo from "../CreateTodo";
-import SectionGap from "../SectionGap";
+import CreateTodo from "@/Components/CreateTodo";
+import SectionGap from "@/Components/SectionGap";
 
 const TodoList: React.FC<{
   todos: Array<TodoInterface>;
@@ -10,6 +10,7 @@ const TodoList: React.FC<{
   onCreate: (todoTitle: string) => void;
 }> = (props) => {
   const { todos, onUpdate, onDelete, onCreate } = props;
+
   return (
     <>
       <SectionGap gap={20}/>
