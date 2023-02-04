@@ -5,34 +5,53 @@ import UsersList from "@/Components/UsersList";
 import TodoList from "@/Components/TodoList";
 import SectionGap from "@/Components/SectionGap";
 import { PaginationObject, Todo } from "@/Types/generic";
-import { callNextAPI, createTodo, deleteTodo, editTodo, getTodos } from "@/Api/todos";
+import {
+  callNextAPI,
+  createTodo,
+  deleteTodo,
+  editTodo,
+  getTodos,
+} from "@/Api/todos";
 
 const Home: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState<number>(1);
   const [todos, setTodos] = useState<Array<Todo>>([]);
-  const [links, setLinks] = useState<PaginationObject>({ first: "", next: "", last: "", prev: "" });
+  const [links, setLinks] = useState<PaginationObject>({
+    first: "",
+    next: "",
+    last: "",
+    prev: "",
+  });
 
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentUserId(parseInt(e.target.value));
   };
 
-  const handlePaginate = async (link: string) => {
-    const todos = await callNextAPI(link);
+  const handlePaginate = async (link?: string) => {
+    const todos = await callNextAPI(link || "");
 
     setTodos(todos);
-  }
+  };
 
   const handleCreate = async (todoTitle: string) => {
     try {
-      const newTodo = { title: todoTitle, completed: false, userId: currentUserId };
-      const todoId = await createTodo({ title: todoTitle, completed: false, userId: currentUserId });
+      const newTodo = {
+        title: todoTitle,
+        completed: false,
+        userId: currentUserId,
+      };
+      const todoId = await createTodo({
+        title: todoTitle,
+        completed: false,
+        userId: currentUserId,
+      });
 
       setTodos([{ id: todoId, ...newTodo }, ...todos]);
     } catch (e) {
-      console.log('failed to create todo');
+      console.log("failed to create todo");
     }
-  }
+  };
 
   const handleTodoUpdate = async (todo: Todo) => {
     const returnedTodo = await editTodo(todo);
@@ -50,9 +69,9 @@ const Home: React.FC = () => {
     setTodos(newTodos);
   };
 
-  const handleTodoDelete = (todoId: number) => {
+  const handleTodoDelete = (todoId?: number) => {
     try {
-      deleteTodo(todoId);
+      deleteTodo(todoId || -1);
 
       setTodos(todos.filter((todo: Todo) => todo.id != todoId));
     } catch (e) {
@@ -93,7 +112,7 @@ const Home: React.FC = () => {
         onUpdate={handleTodoUpdate}
         todos={todos}
       />
-      <SectionGap gap={30}/>
+      <SectionGap gap={30} />
       <Pagination onPaginate={handlePaginate} paginationLinks={links} />
     </>
   );

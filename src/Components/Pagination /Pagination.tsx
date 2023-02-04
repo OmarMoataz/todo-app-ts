@@ -1,18 +1,20 @@
 import { PaginationObject } from "@/Types/generic";
 
-import { PaginationContainer } from "./Pagination.style";
+import { PaginationContainer, PaginateButton } from "./Pagination.style";
 
 const Pagination: React.FC<{
   paginationLinks: PaginationObject;
-  onPaginate: (link: string) => void;
+  onPaginate: (link?: string) => void;
 }> = ({ paginationLinks, onPaginate }) => {
   return (
     <PaginationContainer>
       {Object.keys(paginationLinks).map((key) => {
+        const typedKey = key as keyof typeof paginationLinks;
+        const val = paginationLinks[typedKey];
         return (
-          <button onClick={() => onPaginate(paginationLinks[key])} key={key}>
+          <PaginateButton onClick={() => onPaginate(val)} key={key}>
             {key}
-          </button>
+          </PaginateButton>
         );
       })}
     </PaginationContainer>

@@ -6,7 +6,7 @@ import SectionGap from "@/Components/SectionGap";
 const TodoList: React.FC<{
   todos: Array<TodoInterface>;
   onUpdate: (todo: TodoInterface) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id?: number) => void;
   onCreate: (todoTitle: string) => void;
 }> = (props) => {
   const { todos, onUpdate, onDelete, onCreate } = props;
