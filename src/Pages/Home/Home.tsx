@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import axios from "axios";
 import Pagination from "@/Components/Pagination ";
 import UsersList from "@/Components/UsersList";
 import TodoList from "@/Components/TodoList";
 import SectionGap from "@/Components/SectionGap";
 import { PaginationObject, Todo } from "@/Types/generic";
+import { getUsers } from "@/Api/users";
 import {
   callNextAPI,
   createTodo,
@@ -80,9 +80,7 @@ const Home: React.FC = () => {
   };
 
   const getUsersData = useCallback(async () => {
-    const usersResponse = await axios.get(import.meta.env.VITE_USERS_API);
-
-    setUsers(usersResponse.data);
+    setUsers(await getUsers());
   }, []);
 
   const getTodosData = useCallback(async () => {
