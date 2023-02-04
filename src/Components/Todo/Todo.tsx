@@ -1,10 +1,10 @@
 import { Todo as TodoInterface } from "@/Types/generic";
 import { useState, useEffect } from "react";
+
+import { TodoInput, TodoButton } from "@/Components/CommonTodoStyles";
 import {
   TodoItem,
-  TodoButton,
   TodoTitle,
-  TodoInput,
   TodoButtons,
 } from "./Todo.style";
 

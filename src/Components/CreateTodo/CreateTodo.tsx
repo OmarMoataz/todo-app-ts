@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { CreateTodoContainer, TodoLabel } from "./CreateTodo.style";
-import { TodoButton, TodoInput } from "@/Components/Todo/Todo.style";
+import { TodoInput, TodoButton } from '@/Components/CommonTodoStyles';
 
 const CreateTodo: React.FC<{ onCreate: (todoTitle: string) => void }> = ({
   onCreate,
