@@ -20,7 +20,7 @@ export const editTodo = async (todo: Todo) => {
     ...todo,
   })
 
-  return todosResponse;
+  return todosResponse.data;
 }
 
 export const deleteTodo = async (todoId: number) => {

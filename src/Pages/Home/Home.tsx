@@ -9,26 +9,37 @@ import { deleteTodo, editTodo } from "@/Api/todos";
 const Home: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState<number>(1);
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Array<Todo>>([]);
 
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentUserId(parseInt(e.target.value));
-  }
+  };
 
-  const handleTodoUpdate = (todo: Todo) => {
-    editTodo(todo);
-  }
+  const handleTodoUpdate = async (todo: Todo) => {
+    const returnedTodo = await editTodo(todo);
+
+    const todoIndex = todos.findIndex(
+      (todoInData: Todo) => todo.id == todoInData.id
+    );
+
+    const newTodos = [
+      ...todos.slice(0, todoIndex),
+      returnedTodo,
+      ...todos.slice(todoIndex + 1, todos.length),
+    ];
+
+    setTodos(newTodos);
+  };
 
   const handleTodoDelete = (todoId: number) => {
     try {
       deleteTodo(todoId);
 
       setTodos(todos.filter((todo: Todo) => todo.id != todoId));
-      
     } catch (e) {
-      console.log('error deleting todo');
+      console.log("error deleting todo");
     }
-  }
+  };
 
   const getUsersData = useCallback(async () => {
     const usersResponse = await axios.get(import.meta.env.VITE_USERS_API);
@@ -37,7 +48,9 @@ const Home: React.FC = () => {
   }, []);
 
   const getTodosData = useCallback(async () => {
-    const todosResponse = await axios.get(`${import.meta.env.VITE_TODOS_API}?userId=${currentUserId}`);
+    const todosResponse = await axios.get(
+      `${import.meta.env.VITE_TODOS_API}?userId=${currentUserId}`
+    );
 
     setTodos(todosResponse.data);
   }, [currentUserId]);
@@ -50,13 +63,19 @@ const Home: React.FC = () => {
     getTodosData();
   }, [getTodosData, currentUserId]);
 
-  return <>
-    <SectionGap gap={10}/>
-    <h1> Todos </h1>
-    <SectionGap gap={10}/>
-    <UsersList onChangeUser={handleUserChange} users={users} /> 
-    <TodoList onDelete={handleTodoDelete} onUpdate={handleTodoUpdate} todos={todos}/>
-  </>;
+  return (
+    <>
+      <SectionGap gap={10} />
+      <h1> Todos </h1>
+      <SectionGap gap={10} />
+      <UsersList onChangeUser={handleUserChange} users={users} />
+      <TodoList
+        onDelete={handleTodoDelete}
+        onUpdate={handleTodoUpdate}
+        todos={todos}
+      />
+    </>
+  );
 };
 
 export default Home;
