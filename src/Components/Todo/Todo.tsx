@@ -11,7 +11,7 @@ import {
 const Todo: React.FC<{
   todo: TodoInterface;
   onUpdate: (todo: TodoInterface) => void;
-  onDelete: (id: number) => void;
+  onDelete: (id?: number) => void;
 }> = (props) => {
   const { todo, onUpdate, onDelete } = props;
 
