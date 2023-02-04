@@ -1,19 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
+import Pagination from "@/Components/Pagination ";
 import UsersList from "@/Components/UsersList";
 import TodoList from "@/Components/TodoList";
 import SectionGap from "@/Components/SectionGap";
-import { Todo } from "@/Types/generic";
-import { createTodo, deleteTodo, editTodo, getTodos } from "@/Api/todos";
+import { PaginationObject, Todo } from "@/Types/generic";
+import { callNextAPI, createTodo, deleteTodo, editTodo, getTodos } from "@/Api/todos";
 
 const Home: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState<number>(1);
   const [todos, setTodos] = useState<Array<Todo>>([]);
+  const [links, setLinks] = useState<PaginationObject>({ first: "", next: "", last: "", prev: "" });
 
   const handleUserChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentUserId(parseInt(e.target.value));
   };
+
+  const handlePaginate = async (link: string) => {
+    const todos = await callNextAPI(link);
+
+    setTodos(todos);
+  }
 
   const handleCreate = async (todoTitle: string) => {
     try {
@@ -59,8 +67,9 @@ const Home: React.FC = () => {
   }, []);
 
   const getTodosData = useCallback(async () => {
-    const todos = await getTodos(currentUserId);
+    const [todos, paginationObject] = await getTodos(currentUserId);
 
+    setLinks(paginationObject);
     setTodos(todos);
   }, [currentUserId]);
 
@@ -84,6 +93,8 @@ const Home: React.FC = () => {
         onUpdate={handleTodoUpdate}
         todos={todos}
       />
+      <SectionGap gap={30}/>
+      <Pagination onPaginate={handlePaginate} paginationLinks={links} />
     </>
   );
 };
