@@ -19,6 +19,7 @@ const CreateTodo: React.FC<{ onCreate: (todoTitle: string) => void }> = ({
     <CreateTodoContainer>
       <TodoLabel> New Todo: </TodoLabel>
       <TodoInput
+        data-testid="create-todo-input"
         onKeyDown={(e) => handleKeyPress(e)}
         value={todoTitle}
         onChange={(e) => setTodoTitle(e.target.value)}
