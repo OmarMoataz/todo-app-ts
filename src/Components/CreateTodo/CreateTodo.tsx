@@ -8,10 +8,17 @@ const CreateTodo: React.FC<{ onCreate: (todoTitle: string) => void }> = ({
 }) => {
   const [todoTitle, setTodoTitle] = useState("");
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onCreate(todoTitle);
+    }
+  };
+
   return (
     <CreateTodoContainer>
       <TodoLabel> New Todo: </TodoLabel>
       <TodoInput
+        onKeyDown={(e) => handleKeyPress(e)}
         value={todoTitle}
         onChange={(e) => setTodoTitle(e.target.value)}
       />

@@ -1,12 +1,8 @@
 import { Todo as TodoInterface } from "@/Types/generic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 
 import { TodoInput, TodoButton } from "@/Components/CommonTodoStyles";
-import {
-  TodoItem,
-  TodoTitle,
-  TodoButtons,
-} from "./Todo.style";
+import { TodoItem, TodoTitle, TodoButtons } from "./Todo.style";
 
 const Todo: React.FC<{
   todo: TodoInterface;
@@ -30,10 +26,18 @@ const Todo: React.FC<{
     }
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onUpdate({ ...todo, title: todoTitle });
+      setEditMode(false);
+    }
+  };
+
   return (
     <TodoItem>
       {isEditMode ? (
         <TodoInput
+          onKeyDown={(e) => handleKeyPress(e)}
           value={todoTitle}
           onChange={(e) => setTodoTitle(e.target.value)}
         />
