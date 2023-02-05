@@ -46,7 +46,7 @@ const Todo: React.FC<{
       )}
 
       <TodoButtons>
-        <input type="checkbox" onChange={handleCheck} />
+        <input type="checkbox" checked={todo.completed ? true : false} onChange={handleCheck} />
         {isEditMode ? (
           <TodoButton
             onClick={() => {
