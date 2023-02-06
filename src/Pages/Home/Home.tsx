@@ -13,6 +13,8 @@ import {
   getTodos,
 } from "@/Api/todos";
 
+import { HomeContainer } from "./Home.style";
+
 const Home: React.FC = () => {
   const [users, setUsers] = useState([]);
   const [currentUserId, setCurrentUserId] = useState<number>(1);
@@ -99,7 +101,7 @@ const Home: React.FC = () => {
   }, [getTodosData, currentUserId]);
 
   return (
-    <>
+    <HomeContainer>
       <SectionGap gap={10} />
       <h1> Todos </h1>
       <SectionGap gap={10} />
@@ -112,7 +114,7 @@ const Home: React.FC = () => {
       />
       <SectionGap gap={30} />
       <Pagination onPaginate={handlePaginate} paginationLinks={links} />
-    </>
+    </HomeContainer>
   );
 };
 
