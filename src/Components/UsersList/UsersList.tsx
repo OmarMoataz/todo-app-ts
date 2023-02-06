@@ -1,5 +1,7 @@
 import React from "react";
 
+import { SelectContainer } from "./UsersList.style";
+
 interface User {
   id: number,
   name: string;
@@ -14,11 +16,11 @@ const UsersList: React.FC<UsersProps> = (props) => {
   const { users, onChangeUser } = props;
 
   return (
-    <select defaultValue={users[0]?.id} onChange={onChangeUser}>
+    <SelectContainer defaultValue={users[0]?.id} onChange={onChangeUser}>
       {users.map((user: User) => {
         return <option value={user.id} key={user.id}> {user.name} </option>;
       })}
-    </select>
+    </SelectContainer>
   );
 };
 
