@@ -11,6 +11,7 @@ export const TodoButtons = styled.div`
   display: flex;
   column-gap: 10px;
   flex-grow: 1;
+  justify-content: right;
 `
 
 export const TodoTitle = styled.div<{ checked: boolean }>`
