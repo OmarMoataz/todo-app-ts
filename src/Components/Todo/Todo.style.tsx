@@ -10,6 +10,8 @@ export const TodoItem = styled.div`
 export const TodoButtons = styled.div`
   display: flex;
   column-gap: 10px;
+  height: 36px;
+  align-items: center;
   flex-grow: 1;
   justify-content: right;
 `

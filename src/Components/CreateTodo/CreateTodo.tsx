@@ -1,7 +1,9 @@
 import { useState } from "react";
+import IconCreate from "~icons/gridicons/create";
 
 import { CreateTodoContainer, TodoLabel } from "./CreateTodo.style";
 import { TodoInput, TodoButton } from '@/Components/CommonTodoStyles';
+
 
 const CreateTodo: React.FC<{ onCreate: (todoTitle: string) => void }> = ({
   onCreate,
@@ -30,7 +32,7 @@ const CreateTodo: React.FC<{ onCreate: (todoTitle: string) => void }> = ({
           setTodoTitle("");
         }}
       >
-        Save
+        <IconCreate />
       </TodoButton>
     </CreateTodoContainer>
   );

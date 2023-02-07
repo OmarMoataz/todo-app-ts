@@ -1,5 +1,8 @@
 import { Todo as TodoInterface } from "@/Types/generic";
 import { useState, useEffect, KeyboardEvent } from "react";
+import IconEdit from "~icons/carbon/edit";
+import IconDelete from "~icons/carbon/delete";
+import IconSave from "~icons/carbon/save";
 
 import { TodoInput, TodoButton } from "@/Components/CommonTodoStyles";
 import { TodoItem, TodoTitle, TodoButtons } from "./Todo.style";
@@ -27,7 +30,7 @@ const Todo: React.FC<{
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onUpdate({ ...todo, title: todoTitle });
       setEditMode(false);
     }
@@ -46,7 +49,11 @@ const Todo: React.FC<{
       )}
 
       <TodoButtons>
-        <input type="checkbox" checked={todo.completed ? true : false} onChange={handleCheck} />
+        <input
+          type="checkbox"
+          checked={todo.completed ? true : false}
+          onChange={handleCheck}
+        />
         {isEditMode ? (
           <TodoButton
             onClick={() => {
@@ -54,7 +61,7 @@ const Todo: React.FC<{
               setEditMode(false);
             }}
           >
-            Save
+            <IconSave />
           </TodoButton>
         ) : (
           <TodoButton
@@ -63,10 +70,12 @@ const Todo: React.FC<{
               setEditMode(true);
             }}
           >
-            Edit
+            <IconEdit />
           </TodoButton>
         )}
-        <TodoButton onClick={() => onDelete(todo.id)}> Delete </TodoButton>
+        <TodoButton onClick={() => onDelete(todo.id)}>
+          <IconDelete />
+        </TodoButton>
       </TodoButtons>
     </TodoItem>
   );

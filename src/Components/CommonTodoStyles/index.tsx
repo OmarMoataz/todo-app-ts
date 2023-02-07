@@ -8,4 +8,6 @@ export const TodoInput = styled.input`
 
 export const TodoButton = styled.button`
   flex-grow: 0.2;
+  align-items: flex-start;
+  height: 36px;
 `;
